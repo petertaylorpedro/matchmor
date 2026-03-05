@@ -975,12 +975,28 @@ window.addEventListener('scroll', () => {
   document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 40);
 });
 
-// ── COUNTER ANIMATION ──
-window.addEventListener('load', () => {
-  setTimeout(() => {
-    document.getElementById('counterFill').style.width = '71.5%';
-  }, 300);
-});
+// ── LIVE COUNTER ──
+async function loadWaitlistCount() {
+  try {
+    const res = await fetch('/api/waitlist/count');
+    const data = await res.json();
+    const count = Math.min(data.count, 200);
+    const pct = (count / 200 * 100).toFixed(1);
+
+    document.getElementById('spotsLeft').textContent = count;
+    document.getElementById('spotsLeftCta').textContent = 200 - count;
+    setTimeout(() => {
+      document.getElementById('counterFill').style.width = pct + '%';
+    }, 300);
+  } catch (err) {
+    // Fallback — keep the hardcoded values
+    setTimeout(() => {
+      document.getElementById('counterFill').style.width = '71.5%';
+    }, 300);
+  }
+}
+
+window.addEventListener('load', loadWaitlistCount);
 
 // ── SCROLL REVEAL ──
 const observer = new IntersectionObserver((entries) => {
