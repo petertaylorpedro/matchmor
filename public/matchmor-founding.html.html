@@ -964,12 +964,12 @@ footer {
     <a href="#" class="footer-link">Our Promise</a>
     <a href="#" class="footer-link">Privacy Policy</a>
     <a href="#" class="footer-link">Terms</a>
-    <a href="mailto:hello@matchmor.com" class="footer-link">Contact</a>
+    <a href="/cdn-cgi/l/email-protection#cba3aea7a7a48ba6aabfa8a3a6a4b9e5a8a4a6" class="footer-link">Contact</a>
   </div>
   <div class="footer-copy">© 2026 matchMor, LLC · Provo, Utah · Eternal Connections, Intelligently Made.</div>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ── NAV SCROLL ──
 window.addEventListener('scroll', () => {
   document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 40);
@@ -1008,32 +1008,61 @@ function handleHeroSubmit(e) {
 }
 
 // ── CTA FORM ──
-function handleCtaSubmit(e) {
+async function handleCtaSubmit(e) {
   e.preventDefault();
-  const first = document.getElementById('ctaFirst').value;
-  const ref = genRef();
-  
-  // Show success
-  document.getElementById('ctaFormWrap').style.display = 'none';
-  const ss = document.getElementById('successState');
-  ss.classList.add('visible');
-  document.getElementById('successRef').textContent = 'Your Founding Member Reference: ' + ref;
 
-  // Update counter
-  const current = parseInt(document.getElementById('spotsLeft').textContent);
-  const newCount = current + 1;
-  document.getElementById('spotsLeft').textContent = newCount;
-  document.getElementById('spotsLeftCta').textContent = 200 - newCount;
-  document.getElementById('counterFill').style.width = (newCount / 200 * 100) + '%';
+  const first   = document.getElementById('ctaFirst').value.trim();
+  const last    = document.getElementById('ctaLast').value.trim();
+  const email   = document.getElementById('ctaEmail').value.trim();
+  const location = document.getElementById('ctaLocation').value;
+  const gender  = document.getElementById('ctaGender').value;
+
+  if (!first || !last || !email || !location || !gender) return;
+
+  // Disable button while submitting
+  const btn = document.querySelector('.cta-btn');
+  const origText = btn.textContent;
+  btn.textContent = 'Claiming your spot...';
+  btn.disabled = true;
+  btn.style.opacity = '0.7';
+
+  try {
+    const res = await fetch('/api/waitlist', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, firstName: first, lastName: last, location, gender })
+    });
+
+    const data = await res.json();
+
+    if (data.success) {
+      // Show success state
+      document.getElementById('ctaFormWrap').style.display = 'none';
+      const ss = document.getElementById('successState');
+      ss.classList.add('visible');
+      document.getElementById('successRef').textContent = 'Your Founding Member Reference: ' + data.foundingRef;
+
+      // Update counter
+      const current = parseInt(document.getElementById('spotsLeft').textContent);
+      const newCount = Math.min(current + 1, 200);
+      document.getElementById('spotsLeft').textContent = newCount;
+      document.getElementById('spotsLeftCta').textContent = 200 - newCount;
+      document.getElementById('counterFill').style.width = (newCount / 200 * 100) + '%';
+    } else {
+      btn.textContent = origText;
+      btn.disabled = false;
+      btn.style.opacity = '1';
+      alert(data.error || 'Something went wrong. Please try again.');
+    }
+  } catch (err) {
+    btn.textContent = origText;
+    btn.disabled = false;
+    btn.style.opacity = '1';
+    alert('Connection error. Please check your internet and try again.');
+  }
 }
 
 // ── SMOOTH SCROLL ──
 document.querySelectorAll('a[href^="#"]').forEach(a => {
   a.addEventListener('click', e => {
-    const target = document.querySelector(a.getAttribute('href'));
-    if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
-  });
-});
-</script>
-</body>
-</html>
+    const target = document.querySelector
