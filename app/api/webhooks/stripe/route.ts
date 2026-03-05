@@ -1,4 +1,5 @@
-// ============================================================
+// updated
+//============================================================
 // app/api/webhooks/stripe/route.ts
 // Stripe webhook handler
 // Keeps subscription status in sync with Supabase
