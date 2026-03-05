@@ -38,7 +38,7 @@ export async function POST(req: NextRequest) {
       // ── CHECKOUT COMPLETED ──
       // Member just subscribed (or started free trial)
       case 'checkout.session.completed': {
-        const session = event.data.object as Stripe.CheckoutSession
+        const session = event.data.object as Stripe.Checkout.Session
         const profileId = session.metadata?.profile_id
         if (!profileId) break
 
