@@ -96,7 +96,7 @@ export async function POST(req: NextRequest) {
           .from('profiles')
           .update({
             subscription_status: statusMap[sub.status] || 'inactive',
-            subscription_ends_at: new Date(sub.current_period_end * 1000).toISOString(),
+            subscription_ends_at: new Date((sub as any).current_period_end * 1000).toISOString(),
           })
           .eq('id', profileId)
 
