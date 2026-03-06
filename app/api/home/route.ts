@@ -965,7 +965,7 @@ footer {
     <a href="#" class="footer-link">Our Promise</a>
     <a href="#" class="footer-link">Privacy Policy</a>
     <a href="#" class="footer-link">Terms</a>
-    <a href="/cdn-cgi/l/email-protection#cba3aea7a7a48ba6aabfa8a3a6a4b9e5a8a4a6" class="footer-link">Contact</a>
+    <a href="mailto:hello@matchmor.com" class="footer-link">Contact</a>
   </div>
   <div class="footer-copy">© 2026 matchMor, LLC · Provo, Utah · Eternal Connections, Intelligently Made.</div>
 </footer>
@@ -982,21 +982,13 @@ async function loadWaitlistCount() {
     const res = await fetch('/api/waitlist/count');
     const data = await res.json();
     const count = Math.min(data.count, 200);
-    const pct = (count / 200 * 100).toFixed(1);
-
     document.getElementById('spotsLeft').textContent = count;
     document.getElementById('spotsLeftCta').textContent = 200 - count;
-    setTimeout(() => {
-      document.getElementById('counterFill').style.width = pct + '%';
-    }, 300);
+    document.getElementById('counterFill').style.width = (count / 200 * 100) + '%';
   } catch (err) {
-    // Fallback — keep the hardcoded values
-    setTimeout(() => {
-      document.getElementById('counterFill').style.width = '71.5%';
-    }, 300);
+    document.getElementById('counterFill').style.width = '71.5%';
   }
 }
-
 window.addEventListener('load', loadWaitlistCount);
 
 // ── SCROLL REVEAL ──
@@ -1028,15 +1020,14 @@ function handleHeroSubmit(e) {
 async function handleCtaSubmit(e) {
   e.preventDefault();
 
-  const first   = document.getElementById('ctaFirst').value.trim();
-  const last    = document.getElementById('ctaLast').value.trim();
-  const email   = document.getElementById('ctaEmail').value.trim();
+  const first    = document.getElementById('ctaFirst').value.trim();
+  const last     = document.getElementById('ctaLast').value.trim();
+  const email    = document.getElementById('ctaEmail').value.trim();
   const location = document.getElementById('ctaLocation').value;
-  const gender  = document.getElementById('ctaGender').value;
+  const gender   = document.getElementById('ctaGender').value;
 
   if (!first || !last || !email || !location || !gender) return;
 
-  // Disable button while submitting
   const btn = document.querySelector('.cta-btn');
   const origText = btn.textContent;
   btn.textContent = 'Claiming your spot...';
@@ -1049,22 +1040,17 @@ async function handleCtaSubmit(e) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, firstName: first, lastName: last, location, gender })
     });
-
     const data = await res.json();
 
     if (data.success) {
-      // Show success state
       document.getElementById('ctaFormWrap').style.display = 'none';
       const ss = document.getElementById('successState');
       ss.classList.add('visible');
       document.getElementById('successRef').textContent = 'Your Founding Member Reference: ' + data.foundingRef;
-
-      // Update counter
-      const current = parseInt(document.getElementById('spotsLeft').textContent);
-      const newCount = Math.min(current + 1, 200);
-      document.getElementById('spotsLeft').textContent = newCount;
-      document.getElementById('spotsLeftCta').textContent = 200 - newCount;
-      document.getElementById('counterFill').style.width = (newCount / 200 * 100) + '%';
+      const count = data.foundingNum;
+      document.getElementById('spotsLeft').textContent = count;
+      document.getElementById('spotsLeftCta').textContent = 200 - count;
+      document.getElementById('counterFill').style.width = (count / 200 * 100) + '%';
     } else {
       btn.textContent = origText;
       btn.disabled = false;
@@ -1082,7 +1068,14 @@ async function handleCtaSubmit(e) {
 // ── SMOOTH SCROLL ──
 document.querySelectorAll('a[href^="#"]').forEach(a => {
   a.addEventListener('click', e => {
-    const target = document.querySelector`
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
+  });
+});
+</script>
+</body>
+</html>
+`
 
 export async function GET() {
   return new NextResponse(html, {
