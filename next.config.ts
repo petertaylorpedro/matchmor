@@ -1,12 +1,11 @@
 import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
-  async redirects() {
+  async rewrites() {
     return [
       {
         source: '/',
-        destination: '/matchmor-founding.html',
-        permanent: false,
+        destination: '/api/home',
       },
     ]
   },
