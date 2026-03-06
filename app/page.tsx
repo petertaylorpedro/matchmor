@@ -1,5 +1,11 @@
-import { redirect } from 'next/navigation'
+import fs from 'fs'
+import path from 'path'
 
 export default function Home() {
-  redirect('/matchmor-founding.html')
+  const filePath = path.join(process.cwd(), 'public', 'matchmor-founding.html')
+  const html = fs.readFileSync(filePath, 'utf-8')
+  
+  return (
+    <html dangerouslySetInnerHTML={{ __html: html.replace(/^<!DOCTYPE html><html[^>]*>/, '').replace(/<\/html>$/, '') }} />
+  )
 }
