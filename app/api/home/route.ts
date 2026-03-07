@@ -961,10 +961,10 @@ footer {
 <footer>
   <div class="footer-logo"><span>match</span><span class="Mor">Mor</span></div>
   <div class="footer-links">
-    <a href="#" class="footer-link">How It Works</a>
+    <a href="#how-it-works" class="footer-link">How It Works</a>
     <a href="#" class="footer-link">Our Promise</a>
-    <a href="#" class="footer-link">Privacy Policy</a>
-    <a href="#" class="footer-link">Terms</a>
+    <a href="/privacy.html" class="footer-link">Privacy Policy</a>
+    <a href="/terms.html" class="footer-link">Terms</a>
     <a href="mailto:hello@matchmor.com" class="footer-link">Contact</a>
   </div>
   <div class="footer-copy">© 2026 matchMor, LLC · Provo, Utah · Eternal Connections, Intelligently Made.</div>
