@@ -6,6 +6,7 @@ const nextConfig: NextConfig = {
       beforeFiles: [
         { source: '/', destination: '/api/home' },
         { source: '/privacy', destination: '/api/privacy' },
+        { source: '/contact', destination: '/api/contact' },
         { source: '/terms', destination: '/api/terms' },
       ],
     }
