@@ -943,7 +943,7 @@ footer {
           <option>Latter-day Saint man seeking a woman</option>
         </select>
         <button type="submit" class="cta-btn">Claim My Founding Spot — It's Free →</button>
-        <div class="cta-privacy">No credit card required. No spam. We will contact you when matchMor launches in your area. Your information is never sold or shared. <a href="#" style="color:var(--gold);text-decoration:none">Privacy Policy</a></div>
+        <div class="cta-privacy">No credit card required. No spam. We will contact you when matchMor launches in your area. Your information is never sold or shared. <a href="/privacy.html" style="color:var(--gold);text-decoration:none">Privacy Policy</a></div>
       </form>
     </div>
 
