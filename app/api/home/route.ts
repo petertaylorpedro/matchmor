@@ -593,6 +593,71 @@ footer {
 .reveal-delay-4 { transition-delay: 0.4s; }
 .reveal-delay-5 { transition-delay: 0.5s; }
 
+/* ── VIDEO BREAKS ── */
+.video-break {
+  position: relative; width: 100%; overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+}
+.video-break.landscape { height: 70vh; min-height: 420px; }
+.video-break.portrait-split {
+  display: grid; grid-template-columns: 1fr 1fr;
+  min-height: 600px;
+}
+.video-break video {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center;
+}
+.portrait-split .video-pane {
+  position: relative; overflow: hidden; min-height: 600px;
+}
+.portrait-split .video-pane video {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+}
+.portrait-split .text-pane {
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 64px 56px; background: var(--brown2); position: relative; z-index: 2;
+}
+.video-overlay {
+  position: absolute; inset: 0; z-index: 2;
+  background: linear-gradient(to bottom, rgba(42,30,16,0.35), rgba(42,30,16,0.55));
+}
+.video-break-text {
+  position: relative; z-index: 3; text-align: center; padding: 0 40px;
+}
+.video-break-text .eyebrow {
+  font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--gold2); margin-bottom: 16px;
+}
+.video-break-text .quote {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(28px, 3.5vw, 48px);
+  font-weight: 300; font-style: italic;
+  color: var(--cream); line-height: 1.35;
+}
+.video-break-text .quote em { color: var(--gold2); font-style: normal; font-weight: 600; }
+.portrait-split .text-pane .eyebrow {
+  font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 16px;
+}
+.portrait-split .text-pane .heading {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(32px, 3vw, 48px);
+  font-weight: 300; color: var(--cream); line-height: 1.2; margin-bottom: 20px;
+}
+.portrait-split .text-pane .heading em { font-style: italic; color: var(--gold); }
+.portrait-split .text-pane .body {
+  font-size: 15px; color: rgba(245,240,232,0.6); line-height: 1.8;
+}
+@media (max-width: 900px) {
+  .video-break.portrait-split { grid-template-columns: 1fr; }
+  .portrait-split .video-pane { min-height: 360px; }
+  .portrait-split .text-pane { padding: 40px 24px; }
+  .video-break.landscape { height: 50vh; }
+}
+
 /* ── RESPONSIVE ── */
 @media (max-width: 900px) {
   nav { padding: 16px 24px; }
@@ -718,6 +783,18 @@ footer {
   </div>
 </div>
 
+<!-- VIDEO BREAK 1: DANCE -->
+<div class="video-break landscape">
+  <video autoplay muted loop playsinline poster="/videos/video1-dance-poster.jpg">
+    <source src="/videos/video1-dance.mp4" type="video/mp4">
+  </video>
+  <div class="video-overlay"></div>
+  <div class="video-break-text">
+    <div class="eyebrow">What You're Looking For</div>
+    <div class="quote">Not a swipe. Not an algorithm.<br><em>A moment worth waiting for.</em></div>
+  </div>
+</div>
+
 <!-- HOW IT WORKS -->
 <div class="flow-section" id="how-it-works">
   <div class="flow-inner">
@@ -757,6 +834,20 @@ footer {
         <span class="flow-step-tag">Growth</span>
       </div>
     </div>
+  </div>
+</div>
+
+<!-- VIDEO BREAK 2: REFLECTION — portrait split -->
+<div class="video-break portrait-split">
+  <div class="video-pane">
+    <video autoplay muted loop playsinline poster="/videos/video2-reflection-poster.jpg">
+      <source src="/videos/video2-reflection.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="text-pane">
+    <div class="eyebrow">One Introduction at a Time</div>
+    <div class="heading">Intentional.<br><em>Not infinite.</em></div>
+    <div class="body">matchMor doesn't give you a pool to swim in alone. Every week, one curated introduction — fully prepared, fully supported. Because the right person deserves your full attention.</div>
   </div>
 </div>
 
@@ -805,6 +896,18 @@ footer {
     </div>
   </div>
 </section>
+
+<!-- VIDEO BREAK 3: STAR — full landscape -->
+<div class="video-break landscape">
+  <video autoplay muted loop playsinline poster="/videos/video3-star-poster.jpg">
+    <source src="/videos/video3-star.mp4" type="video/mp4">
+  </video>
+  <div class="video-overlay"></div>
+  <div class="video-break-text">
+    <div class="eyebrow">Your Eternal Companion</div>
+    <div class="quote">Somewhere out there, someone is<br><em>reaching for the same star.</em></div>
+  </div>
+</div>
 
 <!-- HONEST SECTION -->
 <div class="honest-section" id="our-promise">
@@ -943,7 +1046,7 @@ footer {
           <option>Latter-day Saint man seeking a woman</option>
         </select>
         <button type="submit" class="cta-btn">Claim My Founding Spot — It's Free →</button>
-        <div class="cta-privacy">No credit card required. No spam. We will contact you when matchMor launches in your area. Your information is never sold or shared. <a href="/api/privacy" style="color:var(--gold);text-decoration:none">Privacy Policy</a></div>
+        <div class="cta-privacy">No credit card required. No spam. We will contact you when matchMor launches in your area. Your information is never sold or shared. <a href="#" style="color:var(--gold);text-decoration:none">Privacy Policy</a></div>
       </form>
     </div>
 
@@ -961,11 +1064,11 @@ footer {
 <footer>
   <div class="footer-logo"><span>match</span><span class="Mor">Mor</span></div>
   <div class="footer-links">
-    <a href="#how-it-works" class="footer-link">How It Works</a>
-    <a href="#our-promise" class="footer-link">Our Promise</a>
-    <a href="/api/privacy" class="footer-link">Privacy Policy</a>
-    <a href="/api/terms" class="footer-link">Terms</a>
-    <a href="/contact" class="footer-link">Contact</a>
+    <a href="#" class="footer-link">How It Works</a>
+    <a href="#" class="footer-link">Our Promise</a>
+    <a href="#" class="footer-link">Privacy Policy</a>
+    <a href="#" class="footer-link">Terms</a>
+    <a href="mailto:hello@matchmor.com" class="footer-link">Contact</a>
   </div>
   <div class="footer-copy">© 2026 matchMor, LLC · Provo, Utah · Eternal Connections, Intelligently Made.</div>
 </footer>
