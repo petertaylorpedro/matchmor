@@ -1,0 +1,115 @@
+import { NextResponse } from 'next/server'
+
+const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy — matchMor</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root { --gold: #C9A84C; --brown: #3D2B1A; --cream: #F5F0E8; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: var(--cream); color: var(--brown); font-family: "DM Sans", sans-serif; font-weight: 300; }
+nav { padding: 20px 60px; border-bottom: 1px solid rgba(61,43,26,0.1); display: flex; align-items: center; justify-content: space-between; }
+.nav-logo { font-family: "Cormorant Garamond", serif; font-size: 24px; text-decoration: none; color: var(--brown); }
+.nav-logo span { font-weight: 700; font-style: italic; color: var(--gold); }
+.back-link { font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--brown); text-decoration: none; opacity: 0.6; }
+.back-link:hover { opacity: 1; color: var(--gold); }
+.container { max-width: 760px; margin: 60px auto; padding: 0 40px 120px; }
+.doc-title { font-family: "Cormorant Garamond", serif; font-size: 42px; font-weight: 300; margin-bottom: 8px; }
+.doc-meta { font-size: 13px; opacity: 0.5; margin-bottom: 48px; padding-bottom: 24px; border-bottom: 1px solid rgba(61,43,26,0.1); }
+h2 { font-family: "Cormorant Garamond", serif; font-size: 24px; font-weight: 600; color: var(--brown); margin: 40px 0 12px; }
+h3 { font-size: 15px; font-weight: 500; color: var(--gold); margin: 28px 0 8px; letter-spacing: 0.03em; }
+p { font-size: 15px; line-height: 1.8; margin-bottom: 16px; opacity: 0.85; }
+ul { margin: 0 0 16px 20px; }
+li { font-size: 15px; line-height: 1.8; opacity: 0.85; margin-bottom: 4px; }
+footer { text-align: center; padding: 40px; font-size: 12px; opacity: 0.4; border-top: 1px solid rgba(61,43,26,0.1); }
+</style>
+</head>
+<body>
+<nav>
+  <a href="/" class="nav-logo">match<span>Mor</span></a>
+  <a href="/" class="back-link">← Back to matchMor</a>
+</nav>
+<div class="container">
+  <h1 class="doc-title">Privacy Policy</h1>
+  <div class="doc-meta">Effective Date: March 6, 2026 &nbsp;·&nbsp; Last Updated: March 6, 2026</div>
+
+  <p>matchMor ("we," "us," or "our") operates matchmor.com and related services. This Privacy Policy explains what information we collect, how we use it, and your rights regarding your personal data. By using matchMor, you agree to the practices described in this policy.</p>
+
+  <h2>1. Information We Collect</h2>
+  <h3>1.1 Information You Provide</h3>
+  <p>When you join our founding member waitlist or create an account, we collect:</p>
+  <ul>
+    <li>First and last name</li>
+    <li>Email address</li>
+    <li>General location (city/region)</li>
+    <li>Gender and relationship preferences</li>
+    <li>Faith background (Latter-day Saint community affiliation)</li>
+    <li>Survey responses related to values, personality, and relationship goals</li>
+  </ul>
+
+  <h3>1.2 Information Collected Automatically</h3>
+  <p>When you visit matchmor.com, we automatically collect basic technical information such as your browser type, device type, IP address, and pages visited. This information is used for security and to improve our service.</p>
+
+  <h3>1.3 Payment Information</h3>
+  <p>If you subscribe to matchMor, payment processing is handled by Stripe, Inc. We do not store your full credit card number or payment details on our servers. Stripe's privacy policy governs the handling of your payment information.</p>
+
+  <h2>2. How We Use Your Information</h2>
+  <p>We use the information we collect to:</p>
+  <ul>
+    <li>Create and manage your matchMor account and waitlist position</li>
+    <li>Generate AI-assisted compatibility assessments and introductions</li>
+    <li>Send you updates about your membership, matches, and the matchMor service</li>
+    <li>Respond to your questions and provide customer support</li>
+    <li>Improve our matching algorithms and service quality</li>
+    <li>Comply with legal obligations</li>
+  </ul>
+  <p>We do not use your information for automated decision-making that produces legal effects without human oversight. All introductions involve human review by matchMor staff.</p>
+
+  <h2>3. How We Share Your Information</h2>
+  <p>We do not sell your personal information to third parties. We do not allow advertisers to target you through our platform.</p>
+  <p>We share information only in the following limited circumstances:</p>
+  <ul>
+    <li><strong>With potential matches:</strong> When matchMor makes an introduction, we share relevant profile information with the person being introduced to you, and vice versa. You will always be notified before an introduction is made.</li>
+    <li><strong>With service providers:</strong> We use trusted third-party services including Supabase (database hosting), Vercel (website hosting), Stripe (payment processing), Resend (email delivery), and Anthropic (AI technology). These providers are contractually required to protect your data.</li>
+    <li><strong>For legal compliance:</strong> We may disclose information if required by law, court order, or to protect the safety of our users or the public.</li>
+  </ul>
+
+  <h2>4. Faith-Based Community Context</h2>
+  <p>matchMor is designed specifically for members of The Church of Jesus Christ of Latter-day Saints and the broader LDS community. By using matchMor, you acknowledge that your faith affiliation and related values information will be used as part of the matching process. This information is treated with the same care and protection as all other personal data under this policy.</p>
+
+  <h2>5. Data Retention</h2>
+  <p>We retain your personal information for as long as your account is active or as needed to provide our services. If you close your account or request deletion, we will delete your personal information within 30 days, except where retention is required by law or for legitimate business purposes such as resolving disputes or preventing fraud.</p>
+
+  <h2>6. Your Rights</h2>
+  <p>You have the right to:</p>
+  <ul>
+    <li>Access the personal information we hold about you</li>
+    <li>Correct inaccurate information</li>
+    <li>Request deletion of your personal information</li>
+    <li>Opt out of marketing communications at any time</li>
+    <li>Withdraw consent where processing is based on consent</li>
+  </ul>
+  <p>To exercise any of these rights, contact us at <a href="/cdn-cgi/l/email-protection#bdcdcfd4cbdcdec4fdd0dcc9ded5d0d2cf93ded2d0" style="color:var(--gold)"><span class="__cf_email__" data-cfemail="bfcfcdd6c9dedcc6ffd2decbdcd7d2d0cd91dcd0d2">[email&#160;protected]</span></a>.</p>
+
+  <h2>7. Data Security</h2>
+  <p>We implement industry-standard security measures to protect your personal information, including encrypted data transmission (HTTPS), secure database hosting, and restricted access controls. However, no method of transmission over the internet is 100% secure, and we cannot guarantee absolute security.</p>
+
+  <h2>8. Children's Privacy</h2>
+  <p>matchMor is intended for adults aged 18 and older. We do not knowingly collect personal information from anyone under 18. If we become aware that a minor has provided us with personal information, we will delete it promptly.</p>
+
+  <h2>9. Changes to This Policy</h2>
+  <p>We may update this Privacy Policy from time to time. We will notify you of significant changes by email or by posting a notice on our website. Your continued use of matchMor after changes are posted constitutes your acceptance of the updated policy.</p>
+
+  <h2>10. Contact Us</h2>
+  <p>If you have questions about this Privacy Policy or our data practices, contact us at:</p>
+  <p><strong>matchMor</strong><br>
+  Email: <a href="/cdn-cgi/l/email-protection#fc8c8e958a9d9f85bc919d889f9491938ed29f9391" style="color:var(--gold)"><span class="__cf_email__" data-cfemail="2656544f5047455f664b4752454e4b49540845494b">[email&#160;protected]</span></a><b`
+
+export async function GET() {
+  return new NextResponse(html, {
+    headers: { 'Content-Type': 'text/html; charset=utf-8' },
+  })
+}
