@@ -965,7 +965,7 @@ footer {
     <a href="#our-promise" class="footer-link">Our Promise</a>
     <a href="/api/privacy" class="footer-link">Privacy Policy</a>
     <a href="/api/terms" class="footer-link">Terms</a>
-    <a href="mailto:hello@matchmor.com" class="footer-link">Contact</a>
+    <a href="/contact" class="footer-link">Contact</a>
   </div>
   <div class="footer-copy">© 2026 matchMor, LLC · Provo, Utah · Eternal Connections, Intelligently Made.</div>
 </footer>
