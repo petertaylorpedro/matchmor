@@ -943,7 +943,7 @@ footer {
           <option>Latter-day Saint man seeking a woman</option>
         </select>
         <button type="submit" class="cta-btn">Claim My Founding Spot — It's Free →</button>
-        <div class="cta-privacy">No credit card required. No spam. We will contact you when matchMor launches in your area. Your information is never sold or shared. <a href="/privacy.html" style="color:var(--gold);text-decoration:none">Privacy Policy</a></div>
+        <div class="cta-privacy">No credit card required. No spam. We will contact you when matchMor launches in your area. Your information is never sold or shared. <a href="/api/privacy" style="color:var(--gold);text-decoration:none">Privacy Policy</a></div>
       </form>
     </div>
 
@@ -962,9 +962,9 @@ footer {
   <div class="footer-logo"><span>match</span><span class="Mor">Mor</span></div>
   <div class="footer-links">
     <a href="#how-it-works" class="footer-link">How It Works</a>
-    <a href="#" class="footer-link">Our Promise</a>
-    <a href="/privacy.html" class="footer-link">Privacy Policy</a>
-    <a href="/terms.html" class="footer-link">Terms</a>
+    <a href="#our-promise" class="footer-link">Our Promise</a>
+    <a href="/api/privacy" class="footer-link">Privacy Policy</a>
+    <a href="/api/terms" class="footer-link">Terms</a>
     <a href="mailto:hello@matchmor.com" class="footer-link">Contact</a>
   </div>
   <div class="footer-copy">© 2026 matchMor, LLC · Provo, Utah · Eternal Connections, Intelligently Made.</div>
