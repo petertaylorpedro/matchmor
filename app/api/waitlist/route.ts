@@ -222,25 +222,72 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Failed to save to waitlist' }, { status: 500 })
     }
 
-    // Send confirmation email via Resend
+    // Send emails via Resend
     const resendKey = process.env.RESEND_API_KEY
+    const ownerEmail = process.env.OWNER_NOTIFY_EMAIL || 'hello@matchmor.com'
     if (resendKey) {
       try {
-        await fetch('https://api.resend.com/emails', {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${resendKey}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            from: 'matchMor <hello@matchmor.com>',
-            to: [email],
-            subject: `You're Founding Member #${foundingNum} — Welcome to matchMor`,
-            html: confirmationEmail(firstName, foundingNum, foundingRef),
+        await Promise.all([
+          // Confirmation to new member
+          fetch('https://api.resend.com/emails', {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${resendKey}`,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              from: 'matchMor <hello@matchmor.com>',
+              to: [email],
+              subject: `You're Founding Member #${foundingNum} — Welcome to matchMor`,
+              html: confirmationEmail(firstName, foundingNum, foundingRef),
+            }),
           }),
-        })
+          // Owner notification
+          fetch('https://api.resend.com/emails', {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${resendKey}`,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              from: 'matchMor <hello@matchmor.com>',
+              to: [ownerEmail],
+              subject: `New Signup - Founding Member #${foundingNum}`,
+              html: `<!DOCTYPE html>
+<html><head><meta charset="UTF-8"></head>
+<body style="margin:0;padding:0;background:#F5F0E8;font-family:'Helvetica Neue',Arial,sans-serif;">
+<table width="100%" cellpadding="0" cellspacing="0" style="background:#F5F0E8;padding:32px 0;">
+  <tr><td align="center">
+    <table width="520" cellpadding="0" cellspacing="0" style="max-width:520px;width:100%;">
+      <tr><td style="background:#3D2B1A;padding:24px 32px;border-radius:6px 6px 0 0;">
+        <div style="font-family:Georgia,serif;font-size:22px;color:#F5F0E8;">
+          match<span style="color:#C9A84C;font-weight:700;font-style:italic;">Mor</span>
+          <span style="font-size:13px;color:rgba(245,240,232,0.4);margin-left:12px;">New Signup Alert</span>
+        </div>
+      </td></tr>
+      <tr><td style="height:3px;background:#C9A84C;"></td></tr>
+      <tr><td style="background:#ffffff;padding:32px;">
+        <p style="font-family:Georgia,serif;font-size:22px;color:#3D2B1A;margin:0 0 24px;">Founding Member #${foundingNum} just joined!</p>
+        <table width="100%" cellpadding="0" cellspacing="0" style="border:1px solid rgba(61,43,26,0.1);border-radius:4px;overflow:hidden;">
+          <tr style="background:#F5F0E8;"><td style="padding:10px 16px;font-size:11px;text-transform:uppercase;color:#6B4C32;font-weight:600;width:120px;">Name</td><td style="padding:10px 16px;font-size:14px;color:#3D2B1A;">${firstName} ${lastName}</td></tr>
+          <tr style="border-top:1px solid rgba(61,43,26,0.08);"><td style="padding:10px 16px;font-size:11px;text-transform:uppercase;color:#6B4C32;font-weight:600;">Email</td><td style="padding:10px 16px;font-size:14px;color:#3D2B1A;">${email}</td></tr>
+          <tr style="border-top:1px solid rgba(61,43,26,0.08);background:#F5F0E8;"><td style="padding:10px 16px;font-size:11px;text-transform:uppercase;color:#6B4C32;font-weight:600;">Location</td><td style="padding:10px 16px;font-size:14px;color:#3D2B1A;">${location || '-'}</td></tr>
+          <tr style="border-top:1px solid rgba(61,43,26,0.08);"><td style="padding:10px 16px;font-size:11px;text-transform:uppercase;color:#6B4C32;font-weight:600;">Gender</td><td style="padding:10px 16px;font-size:14px;color:#3D2B1A;">${gender || '-'}</td></tr>
+          <tr style="border-top:1px solid rgba(61,43,26,0.08);background:#F5F0E8;"><td style="padding:10px 16px;font-size:11px;text-transform:uppercase;color:#6B4C32;font-weight:600;">Ref Code</td><td style="padding:10px 16px;font-size:14px;color:#C9A84C;font-family:'Courier New',monospace;font-weight:700;">${foundingRef}</td></tr>
+          <tr style="border-top:1px solid rgba(61,43,26,0.08);"><td style="padding:10px 16px;font-size:11px;text-transform:uppercase;color:#6B4C32;font-weight:600;">Spots Left</td><td style="padding:10px 16px;font-size:14px;color:#3D2B1A;font-weight:600;">${200 - foundingNum} of 200 remaining</td></tr>
+        </table>
+      </td></tr>
+      <tr><td style="background:#2A1E10;padding:16px 32px;border-radius:0 0 6px 6px;text-align:center;">
+        <p style="font-size:11px;color:rgba(245,240,232,0.3);margin:0;">matchMor &middot; matchmor.com</p>
+      </td></tr>
+    </table>
+  </td></tr>
+</table>
+</body></html>`,
+            }),
+          }),
+        ])
       } catch (emailErr) {
-        // Don't fail the signup if email fails — just log it
         console.error('Email send error:', emailErr)
       }
     }
