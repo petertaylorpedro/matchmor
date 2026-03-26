@@ -12,8 +12,16 @@ const html = `<!DOCTYPE html>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { background: var(--cream); color: var(--brown); font-family: "DM Sans", sans-serif; font-weight: 300; }
 nav { padding: 20px 60px; border-bottom: 1px solid rgba(61,43,26,0.1); display: flex; align-items: center; justify-content: space-between; }
-.nav-logo { font-family: "Cormorant Garamond", serif; font-size: 24px; text-decoration: none; color: var(--brown); }
-.nav-logo span { font-weight: 700; font-style: italic; color: var(--gold); }
+.nav-logo { text-decoration: none; }
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap');
+    .logo-wordmark { font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 26px; letter-spacing: -1px; line-height: 1; display: inline-flex; align-items: baseline; white-space: nowrap; text-decoration: none; }
+    .logo-blue { color: #2BB0D9; } .logo-pink { color: #E94B7B; }
+    .logo-t { display: inline-block; width: 0.38em; height: 0.72em; vertical-align: baseline; margin: 0 -0.02em; }
+    .logo-t svg { display: block; width: 100%; height: 100%; }
+    .logo-c { display: inline-block; width: 0.56em; height: 0.53em; vertical-align: baseline; margin: 0 -0.01em; }
+    .logo-c svg { display: block; width: 100%; height: 100%; overflow: visible; }
+    .logo-heart { display: inline-block; width: 0.68em; height: 0.62em; vertical-align: baseline; margin: 0 0.03em; transform: translateY(0.04em); }
+    .logo-heart svg { display: block; width: 100%; height: 100%; overflow: visible; }
 .back-link { font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--brown); text-decoration: none; opacity: 0.6; }
 .back-link:hover { opacity: 1; color: var(--gold); }
 .container { max-width: 760px; margin: 60px auto; padding: 0 40px 120px; }
@@ -30,8 +38,8 @@ footer { text-align: center; padding: 40px; font-size: 12px; opacity: 0.4; borde
 </head>
 <body>
 <nav>
-  <a href="/" class="nav-logo">match<span>Mor</span></a>
-  <a href="/" class="back-link">← Back to matchMor</a>
+  <a href="/" class="nav-logo"><span class="logo-wordmark"><span class="logo-blue">ma</span><span class="logo-t"><svg viewBox="0 0 30 58" xmlns="http://www.w3.org/2000/svg"><rect x="8.5" y="0" width="13" height="58" fill="#2BB0D9"/><rect x="0" y="14" width="30" height="12" fill="#2BB0D9"/></svg></span><span class="logo-c"><svg viewBox="0 0 46 44" xmlns="http://www.w3.org/2000/svg"><path d="M 38 9 A 18 18 0 1 0 38 35" fill="none" stroke="#2BB0D9" stroke-width="12" stroke-linecap="square"/></svg></span><span class="logo-blue">h</span><span class="logo-pink">m</span><span class="logo-heart"><svg viewBox="-2 -2 68 64" xmlns="http://www.w3.org/2000/svg"><path d="M 32 12 C 26 6, 16 0, 6 6 C -2 12, 0 24, 4 30 L 32 58 L 60 30 C 64 24, 66 12, 58 6 C 48 0, 38 6, 32 12 Z" fill="none" stroke="#E94B7B" stroke-width="11" stroke-linejoin="miter" stroke-miterlimit="5"/></svg></span><span class="logo-pink">r</span></span></a>
+  <a href="/" class="back-link">← Back to matchmor</a>
 </nav>
 <div class="container">
   <h1 class="doc-title">Terms of Service</h1>
@@ -96,7 +104,7 @@ footer { text-align: center; padding: 40px; font-size: 12px; opacity: 0.4; borde
   <p>matchMor is designed as a faith-community service for members of the LDS community. Our service is specifically tailored to shared religious values and practices. matchMor does not discriminate on the basis of race, national origin, disability, or any other characteristic protected by applicable law beyond the faith-community focus of our service.</p>
 
   <h2>9. Privacy</h2>
-  <p>Your use of matchMor is also governed by our <a href="/privacy" style="color:var(--gold)">Privacy Policy</a>, which is incorporated into these Terms by reference.</p>
+  <p>Your use of matchMor is also governed by our <a href="/api/privacy" style="color:var(--gold)">Privacy Policy</a>, which is incorporated into these Terms by reference.</p>
 
   <h2>10. Termination</h2>
   <p>You may close your account at any time by contacting us at <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="0c7f797c7c637e784c616d786f6461637e226f6361">[email&#160;protected]</a>. matchMor may suspend or terminate your account at any time for violation of these Terms, harmful conduct toward other members, or for any reason with reasonable notice. Upon termination, your right to use the service ceases immediately.</p>
