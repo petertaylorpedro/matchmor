@@ -734,18 +734,7 @@ footer {
 <section class="hero">
 
   <!-- Temple Star SVG -->
-  <svg class="hero-star" viewBox="0 0 60 60" fill="none">
-    <g transform="translate(30,30)">
-      <polygon points="0,-26 6,-6 26,0 6,6 0,26 -6,6 -26,0 -6,-6" fill="#C9A84C" opacity="0.15"/>
-      <polygon points="0,-26 6,-6 26,0 6,6 0,26 -6,6 -26,0 -6,-6" fill="none" stroke="#C9A84C" stroke-width="1.2"/>
-      <polygon points="0,-17 4,-4 17,0 4,4 0,17 -4,4 -17,0 -4,-4" fill="#C9A84C" opacity="0.2"/>
-      <circle cx="0" cy="0" r="3" fill="#C9A84C"/>
-      <circle cx="0" cy="-28" r="1.5" fill="#C9A84C" opacity="0.5"/>
-      <circle cx="28" cy="0" r="1.5" fill="#C9A84C" opacity="0.5"/>
-      <circle cx="0" cy="28" r="1.5" fill="#C9A84C" opacity="0.5"/>
-      <circle cx="-28" cy="0" r="1.5" fill="#C9A84C" opacity="0.5"/>
-    </g>
-  </svg>
+  <img src="/cupid-heart.png" class="hero-star" alt="" aria-hidden="true">
 
   <div class="hero-eyebrow">Founding Member Invitation · Utah Valley · Spring 2026</div>
 
@@ -1039,13 +1028,7 @@ footer {
 <div class="cta-section" id="join">
   <div class="cta-inner">
 
-    <svg class="cta-star" viewBox="0 0 60 60" fill="none">
-      <g transform="translate(30,30)">
-        <polygon points="0,-26 6,-6 26,0 6,6 0,26 -6,6 -26,0 -6,-6" fill="#C9A84C" opacity="0.15"/>
-        <polygon points="0,-26 6,-6 26,0 6,6 0,26 -6,6 -26,0 -6,-6" fill="none" stroke="#C9A84C" stroke-width="1.2"/>
-        <circle cx="0" cy="0" r="3" fill="#C9A84C"/>
-      </g>
-    </svg>
+    <img src="/cupid-heart.png" class="cta-star" alt="" aria-hidden="true">
 
     <div class="spots-left reveal">
       <div class="pulse"></div>
