@@ -59,12 +59,50 @@ nav.scrolled {
   padding: 14px 60px;
   backdrop-filter: blur(12px);
 }
-.nav-logo {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 26px; font-weight: 400; color: var(--brown);
-  text-decoration: none; letter-spacing: 0.01em;
+.nav-logo { text-decoration: none; }
+
+/* ── NEW LOGO ── */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap');
+.logo-wordmark {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 28px;
+  letter-spacing: -1px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: baseline;
+  white-space: nowrap;
+  text-decoration: none;
 }
-.nav-logo .Mor { font-weight: 700; font-style: italic; color: var(--gold); }
+.logo-wordmark-footer { font-size: 24px; }
+.logo-blue { color: #2BB0D9; }
+.logo-pink { color: #E94B7B; }
+.logo-blue-f { color: #2BB0D9; }
+.logo-pink-f { color: #E94B7B; }
+.logo-t, .logo-t-f {
+  display: inline-block;
+  width: 0.38em; height: 0.72em;
+  vertical-align: baseline;
+  margin: 0 -0.02em;
+}
+.logo-t svg, .logo-t-f svg { display: block; width: 100%; height: 100%; }
+.logo-c, .logo-c-f {
+  display: inline-block;
+  width: 0.56em; height: 0.53em;
+  vertical-align: baseline;
+  margin: 0 -0.01em;
+}
+.logo-c svg, .logo-c-f svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.logo-heart, .logo-heart-f {
+  display: inline-block;
+  width: 0.68em; height: 0.62em;
+  vertical-align: baseline;
+  margin: 0 0.03em;
+  transform: translateY(0.04em);
+}
+.logo-heart svg, .logo-heart-f svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.nav-logo { text-decoration: none; }
+
 .nav-links { display: flex; align-items: center; gap: 32px; }
 .nav-link {
   font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase;
@@ -558,11 +596,7 @@ footer {
   display: flex; align-items: center; justify-content: space-between;
   flex-wrap: wrap; gap: 20px;
 }
-.footer-logo {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 22px; color: var(--cream); font-weight: 400;
-}
-.footer-logo .Mor { font-weight: 700; font-style: italic; color: var(--gold2); }
+.footer-logo { display: flex; align-items: center; }
 .footer-links {
   display: flex; gap: 24px; flex-wrap: wrap;
 }
@@ -683,7 +717,11 @@ footer {
 
 <!-- NAV -->
 <nav id="nav">
-  <a href="#" class="nav-logo"><span>match</span><span class="Mor">Mor</span></a>
+  <a href="/" class="nav-logo" aria-label="matchmor home">
+    <span class="logo-wordmark">
+      <span class="logo-blue">ma</span><span class="logo-t"><svg viewBox="0 0 30 58" xmlns="http://www.w3.org/2000/svg"><rect x="8.5" y="0" width="13" height="58" fill="#2BB0D9"/><rect x="0" y="14" width="30" height="12" fill="#2BB0D9"/></svg></span><span class="logo-c"><svg viewBox="0 0 46 44" xmlns="http://www.w3.org/2000/svg"><path d="M 38 9 A 18 18 0 1 0 38 35" fill="none" stroke="#2BB0D9" stroke-width="12" stroke-linecap="square"/></svg></span><span class="logo-blue">h</span><span class="logo-pink">m</span><span class="logo-heart"><svg viewBox="-2 -2 68 64" xmlns="http://www.w3.org/2000/svg"><path d="M 32 12 C 26 6, 16 0, 6 6 C -2 12, 0 24, 4 30 L 32 58 L 60 30 C 64 24, 66 12, 58 6 C 48 0, 38 6, 32 12 Z" fill="none" stroke="#E94B7B" stroke-width="11" stroke-linejoin="miter" stroke-miterlimit="5"/></svg></span><span class="logo-pink">r</span>
+    </span>
+  </a>
   <div class="nav-links">
     <a href="#how-it-works" class="nav-link">How It Works</a>
     <a href="#founding" class="nav-link">Founding Benefits</a>
@@ -1062,7 +1100,11 @@ footer {
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-logo"><span>match</span><span class="Mor">Mor</span></div>
+  <div class="footer-logo" aria-label="matchmor">
+    <span class="logo-wordmark logo-wordmark-footer">
+      <span class="logo-blue-f">ma</span><span class="logo-t-f"><svg viewBox="0 0 30 58" xmlns="http://www.w3.org/2000/svg"><rect x="8.5" y="0" width="13" height="58" fill="#2BB0D9"/><rect x="0" y="14" width="30" height="12" fill="#2BB0D9"/></svg></span><span class="logo-c-f"><svg viewBox="0 0 46 44" xmlns="http://www.w3.org/2000/svg"><path d="M 38 9 A 18 18 0 1 0 38 35" fill="none" stroke="#2BB0D9" stroke-width="12" stroke-linecap="square"/></svg></span><span class="logo-blue-f">h</span><span class="logo-pink-f">m</span><span class="logo-heart-f"><svg viewBox="-2 -2 68 64" xmlns="http://www.w3.org/2000/svg"><path d="M 32 12 C 26 6, 16 0, 6 6 C -2 12, 0 24, 4 30 L 32 58 L 60 30 C 64 24, 66 12, 58 6 C 48 0, 38 6, 32 12 Z" fill="none" stroke="#E94B7B" stroke-width="11" stroke-linejoin="miter" stroke-miterlimit="5"/></svg></span><span class="logo-pink-f">r</span>
+    </span>
+  </div>
   <div class="footer-links">
     <a href="#" class="footer-link">How It Works</a>
     <a href="#" class="footer-link">Our Promise</a>

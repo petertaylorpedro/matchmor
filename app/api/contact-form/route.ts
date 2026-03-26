@@ -25,7 +25,7 @@ export async function POST(request: Request) {
       <tr>
         <td style="background:#3D2B1A;padding:28px 36px;border-radius:6px 6px 0 0;">
           <div style="font-family:Georgia,serif;font-size:24px;color:#F5F0E8;">
-            match<span style="color:#C9A84C;font-weight:700;font-style:italic;">Mor</span>
+            <span style="font-family:'Poppins',Arial,sans-serif;font-weight:700;font-size:30px;letter-spacing:-1px;"><span style="color:#2BB0D9;">match</span><span style="color:#E94B7B;">m&#9825;r</span></span>
           </div>
           <div style="font-size:11px;color:rgba(245,240,232,0.4);letter-spacing:0.15em;text-transform:uppercase;margin-top:6px;">New Contact Form Submission</div>
         </td>
@@ -72,7 +72,7 @@ export async function POST(request: Request) {
       <tr>
         <td style="background:#3D2B1A;padding:32px 36px;border-radius:6px 6px 0 0;text-align:center;">
           <div style="font-family:Georgia,serif;font-size:28px;color:#F5F0E8;">
-            match<span style="color:#C9A84C;font-weight:700;font-style:italic;">Mor</span>
+            <span style="font-family:'Poppins',Arial,sans-serif;font-weight:700;font-size:30px;letter-spacing:-1px;"><span style="color:#2BB0D9;">match</span><span style="color:#E94B7B;">m&#9825;r</span></span>
           </div>
         </td>
       </tr>

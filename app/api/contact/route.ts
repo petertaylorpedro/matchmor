@@ -64,12 +64,22 @@ footer a:hover { color: var(--gold); }
   .card { padding: 36px 24px; }
   .form-row { flex-direction: column; gap: 18px; }
 }
+
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap');
+    .logo-wordmark { font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 26px; letter-spacing: -1px; line-height: 1; display: inline-flex; align-items: baseline; white-space: nowrap; text-decoration: none; }
+    .logo-blue { color: #2BB0D9; } .logo-pink { color: #E94B7B; }
+    .logo-t { display: inline-block; width: 0.38em; height: 0.72em; vertical-align: baseline; margin: 0 -0.02em; }
+    .logo-t svg { display: block; width: 100%; height: 100%; }
+    .logo-c { display: inline-block; width: 0.56em; height: 0.53em; vertical-align: baseline; margin: 0 -0.01em; }
+    .logo-c svg { display: block; width: 100%; height: 100%; overflow: visible; }
+    .logo-heart { display: inline-block; width: 0.68em; height: 0.62em; vertical-align: baseline; margin: 0 0.03em; transform: translateY(0.04em); }
+    .logo-heart svg { display: block; width: 100%; height: 100%; overflow: visible; }
 </style>
 </head>
 <body>
 
 <nav>
-  <a href="/" class="nav-logo"><span>match</span><span class="Mor">Mor</span></a>
+  <a href="/" class="nav-logo"><span class="logo-wordmark"><span class="logo-blue">ma</span><span class="logo-t"><svg viewBox="0 0 30 58" xmlns="http://www.w3.org/2000/svg"><rect x="8.5" y="0" width="13" height="58" fill="#2BB0D9"/><rect x="0" y="14" width="30" height="12" fill="#2BB0D9"/></svg></span><span class="logo-c"><svg viewBox="0 0 46 44" xmlns="http://www.w3.org/2000/svg"><path d="M 38 9 A 18 18 0 1 0 38 35" fill="none" stroke="#2BB0D9" stroke-width="12" stroke-linecap="square"/></svg></span><span class="logo-blue">h</span><span class="logo-pink">m</span><span class="logo-heart"><svg viewBox="-2 -2 68 64" xmlns="http://www.w3.org/2000/svg"><path d="M 32 12 C 26 6, 16 0, 6 6 C -2 12, 0 24, 4 30 L 32 58 L 60 30 C 64 24, 66 12, 58 6 C 48 0, 38 6, 32 12 Z" fill="none" stroke="#E94B7B" stroke-width="11" stroke-linejoin="miter" stroke-miterlimit="5"/></svg></span><span class="logo-pink">r</span></span></a>
   <a href="/" class="back-link">← Back to matchMor</a>
 </nav>
 

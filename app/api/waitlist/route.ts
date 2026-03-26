@@ -21,7 +21,7 @@ function confirmationEmail(firstName: string, foundingNum: number, foundingRef: 
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Welcome to matchMor</title>
+<title>Welcome to matchmor</title>
 </head>
 <body style="margin:0;padding:0;background:#F5F0E8;font-family:'Georgia',serif;">
 <table width="100%" cellpadding="0" cellspacing="0" style="background:#F5F0E8;padding:40px 0;">
@@ -31,7 +31,7 @@ function confirmationEmail(firstName: string, foundingNum: number, foundingRef: 
       <tr>
         <td style="background:#3D2B1A;padding:40px;text-align:center;border-radius:6px 6px 0 0;">
           <div style="font-family:Georgia,serif;font-size:32px;color:#F5F0E8;font-weight:400;letter-spacing:0.02em;">
-            match<span style="color:#C9A84C;font-weight:700;font-style:italic;">Mor</span>
+            <span style="font-family:'Poppins',Arial,sans-serif;font-weight:700;font-size:30px;letter-spacing:-1px;"><span style="color:#2BB0D9;">match</span><span style="color:#E94B7B;">m&#9825;r</span></span>
           </div>
           <div style="font-size:11px;color:rgba(245,240,232,0.4);letter-spacing:0.2em;text-transform:uppercase;margin-top:8px;">
             Founding Member Confirmation
@@ -50,7 +50,7 @@ function confirmationEmail(firstName: string, foundingNum: number, foundingRef: 
             You're in, ${firstName}.
           </p>
           <p style="font-family:'Helvetica Neue',Arial,sans-serif;font-size:15px;color:#6B4C32;line-height:1.75;margin:0 0 32px;">
-            Welcome to the matchMor founding cohort. You've claimed one of just 200 founding member spots — and we're grateful you're here.
+            Welcome to the matchmor founding cohort. You've claimed one of just 200 founding member spots — and we're grateful you're here.
           </p>
 
           <table width="100%" cellpadding="0" cellspacing="0" style="background:#F5F0E8;border:1px solid rgba(201,168,76,0.3);border-radius:6px;margin-bottom:32px;">
@@ -129,7 +129,7 @@ function confirmationEmail(firstName: string, foundingNum: number, foundingRef: 
               <td style="padding:28px 32px;">
                 <div style="font-family:'Helvetica Neue',Arial,sans-serif;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:#C9A84C;margin-bottom:12px;">What Happens Next</div>
                 <p style="font-family:'Helvetica Neue',Arial,sans-serif;font-size:14px;color:rgba(245,240,232,0.8);line-height:1.75;margin:0;">
-                  We're finalizing our founding cohort now. When matchMor launches in your area this spring, you'll receive your onboarding survey — 48 questions that form the foundation of every introduction we make for you. No introduction happens until that's complete.
+                  We're finalizing our founding cohort now. When matchmor launches in your area this spring, you'll receive your onboarding survey — 48 questions that form the foundation of every introduction we make for you. No introduction happens until that's complete.
                 </p>
               </td>
             </tr>
@@ -149,7 +149,7 @@ function confirmationEmail(firstName: string, foundingNum: number, foundingRef: 
             We're honored to be part of your journey.
           </p>
           <p style="font-family:Georgia,serif;font-size:15px;color:#3D2B1A;font-style:italic;margin:0;">
-            — The matchMor Team
+            — The matchmor team
           </p>
 
         </td>
@@ -238,7 +238,7 @@ export async function POST(request: Request) {
             body: JSON.stringify({
               from: 'matchMor <hello@matchmor.com>',
               to: [email],
-              subject: `You're Founding Member #${foundingNum} — Welcome to matchMor`,
+              subject: `You're Founding Member #${foundingNum} — Welcome to matchmor`,
               html: confirmationEmail(firstName, foundingNum, foundingRef),
             }),
           }),
@@ -261,7 +261,7 @@ export async function POST(request: Request) {
     <table width="520" cellpadding="0" cellspacing="0" style="max-width:520px;width:100%;">
       <tr><td style="background:#3D2B1A;padding:24px 32px;border-radius:6px 6px 0 0;">
         <div style="font-family:Georgia,serif;font-size:22px;color:#F5F0E8;">
-          match<span style="color:#C9A84C;font-weight:700;font-style:italic;">Mor</span>
+          <span style="font-family:'Poppins',Arial,sans-serif;font-weight:700;font-size:30px;letter-spacing:-1px;"><span style="color:#2BB0D9;">match</span><span style="color:#E94B7B;">m&#9825;r</span></span>
           <span style="font-size:13px;color:rgba(245,240,232,0.4);margin-left:12px;">New Signup Alert</span>
         </div>
       </td></tr>
