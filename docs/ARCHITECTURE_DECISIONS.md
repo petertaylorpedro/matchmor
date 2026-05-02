@@ -147,3 +147,46 @@ These two visions are pointed at related but different products. The matching en
 - What the demographics table (Decision 005) needs to look like, since it overlaps with `profile_details` fields
 
 **Decision is not urgent in the sense that nothing is breaking — but it IS blocking, in the sense that almost no further build work makes sense without it.**
+
+---
+
+## Decision 007 — Path 3 chosen for survey + profile_details + matching engine reconciliation
+**Date:** 2026-05-02  
+**Status:** ✅ Decided (resolves OPEN PATH QUESTION above)
+
+**Decision:** The 48-question locked spec survey AND the matching engine's `profile_details` interview model are BOTH retained. Onboarding will collect the structured 48-question survey + a small set of additional interview-style questions to bridge fields the survey doesn't cover. The matching engine continues reading `profile_details` (unchanged from current `lib/matching.ts`); `profile_details` is populated from a combination of survey answers (especially essays) and the bridging questions.
+
+**Rationale:** matchMor's product promise is that the AI is as good as or better than a human matchmaker. Human matchmakers get hours of interview time; their value comes from rich, narrative understanding of the person. The 48-question survey alone doesn't give the AI enough narrative texture to be a matchmaker — it gives data points. The matching engine was built to read narrative inputs (`faith_description`, `family_culture`, `sunday_afternoon`, `looking_for`) and that is the right shape for the product. The survey's essay questions (f8, fm6, p6, l7, r7, pr6) are exactly the kind of narrative input the engine needs. Path 3 honors both halves of existing work and produces an onboarding flow that gives the AI matchmaker-quality input.
+
+**Mapping from survey to profile_details:**
+- `temple_endowed`, `temple_recommend` ← derived from f2 (with bucket logic)
+- `sealing_importance` ← f6 ordinal
+- `mission_served` ← f3 option label
+- `church_activity` ← f1 option label
+- `faith_description` ← f8 essay (direct)
+- `children_desired` ← fm1 numeric to text
+- `family_culture` ← fm6 essay (direct)
+- `interests` ← l1 tag array (direct)
+- `looking_for` ← r7 essay (direct)
+- `children_count` ← from `member_demographics` (Decision 005); NOTE potential duplication to resolve
+- **GAP — needs new bridging questions:** `recharge_style`, `love_language`, `sunday_afternoon`
+
+**Bridging questions to add (NOT in the locked v1 spec; need to be designed):**
+- A short interview-style question about recharge style / where they get energy
+- A love language question (could be radio with the 5 standard love languages or a short essay)
+- A short interview question about what their typical Sunday afternoon looks like (this matters specifically because it's mentioned in the locked spec's section intros and reflects a member's lived rhythm)
+
+These three questions should feel like the kind of things a thoughtful matchmaker would ask in an in-person interview — not data fields. Tone matters.
+
+**Open sub-questions arising from this decision:**
+- The `embedding` column on `profile_details` (USER-DEFINED type) suggests semantic similarity / vector search was planned but is not yet wired up in `lib/matching.ts`. Status of this work is unknown. Future Claude should investigate before assuming the matching engine is "complete."
+- The duplication between `member_demographics.children_count` and `profile_details.children_count` should be resolved when demographics is built — pick one as canonical.
+- Onboarding length: 48 questions + 3 bridging + photos + demographics is a lot. Pacing/save-and-resume is mandatory (already required by spec).
+
+**Implications future-Claude must respect:**
+- Do NOT propose rewriting `lib/matching.ts` to read `survey_responses` directly. The matching engine reads `profile_details`. That is the contract.
+- Do NOT propose dropping `survey_responses` or its supporting schema. The survey is the structured intake; its answers populate `profile_details`.
+- The next build task is the survey UI + the bridging questions UI + the mapping logic that writes to `profile_details` on survey completion.
+- Photos are pr1 in the survey but the storage bucket itself hasn't been verified to exist. Future open question.
+
+**Trigger to revisit:** If real members start completing the survey and the AI briefs feel thin (i.e., the matching engine isn't getting enough signal), we may need to add more bridging questions or revisit which survey fields populate `profile_details`. Test with the first 5-10 founding members and tune.
