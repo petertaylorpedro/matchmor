@@ -32,13 +32,16 @@
 ---
 
 ## Decision 003 — JSONB vs. normalized response storage
-**Date:** Originally ~early March 2026; under reconsideration as of 2026-04-30.  
-**Status:** 🤔 Reconsidering  
-**Original decision:** Member survey answers are stored in `public.survey_responses` as a JSONB blob in a `responses` column, one row per member, keyed by question code (e.g. `{"f1": "temple_active_attending", "fm1": 3, ...}`).  
-**Original rationale:** Simple, flexible, fast to ship. Adding new questions doesn't require schema changes.  
-**Why being reconsidered:** A later session flagged that this design makes the matching engine slower and more bug-prone — to compare any single answer across members, the engine must parse every member's full JSON blob. Normalized storage (one row per (member, question), with typed value columns and FK integrity to `survey_options`) would make matching queries cleaner and catch typo bugs at write time.  
-**Status as of 2026-04-30:** Decision pending. The `survey_responses` table is currently empty (no production data), and no application code yet writes to it, so changing the design is currently free. Decision must be made before survey UI is built.  
-**See also:** `/docs/decisions/003-jsonb-vs-normalized-discussion.md` (to be written when the decision is made).
+**Date:** Originally ~early March 2026; reaffirmed 2026-05-01.  
+**Status:** ✅ Decided  
+**Decision:** Member survey answers are stored in `public.survey_responses` as a JSONB blob in a `responses` column, one row per member, keyed by question code (e.g. `{"f1": "temple_active_attending", "fm1": 3, ...}`). Scores are stored similarly in a `scores` JSONB column.  
+**Rationale:** Simple, flexible, fast to ship. Adding new questions doesn't require schema changes. Owner explicitly chose to treat the matching engine as a black box rather than do hands-on result debugging — which is the use case that would have made normalized storage worthwhile. JSONB is the right tradeoff for this product, this owner, this stage.  
+**Considered and rejected (2026-05-01):** Normalizing into one row per (member, question) with typed value columns and FK integrity to `survey_options`. Rejected because: (a) better matching-engine debuggability was the main benefit and the owner doesn't want hands-on debugging, (b) the performance argument doesn't bite at matchMor's planned scale, (c) typo-safety and FK-integrity benefits are small when the survey UI is the only writer. The normalized design from the 2026-04-30 session is documented but not adopted.  
+**Implications future-Claude must respect:**
+- The matching engine reads JSONB and parses in code. Don't recommend SQL-native scoring queries against `survey_responses`.
+- pr4 privacy is enforced by the `is_private` flag on `survey_questions`, not by separate table isolation. Whatever code reads `survey_responses` must filter out questions where `is_private = true` before returning data to authenticated clients.
+- Adding new questions in v1.x is a content-only change (rows in `survey_questions` and `survey_options`), no schema migration required.  
+**Trigger to revisit:** If the owner ever wants to do hands-on matching-result debugging, OR if matchMor scales past ~10k active matched members and matching becomes slow, OR if a developer joins who would benefit from SQL-native query patterns.
 
 ---
 
