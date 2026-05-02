@@ -10,7 +10,46 @@
 - Status is one of: ✅ Decided, 🤔 Reconsidering, ❌ Reversed, 📝 Provisional.
 - When a decision changes, don't delete the old one. Add a new entry that supersedes it, and update the old entry's status to ❌ Reversed with a pointer to the new one. The history matters.
 - Keep entries short. If something needs more depth, link to a longer doc.
+---
 
+## What's already built (as of 2026-05-01)
+
+> **Future Claude: read this before recommending anything.** This section catalogues the substantial work already in the codebase from prior sessions. Do not propose redesigning, replacing, or "improving" any of these without first reading the actual code and confirming the recommendation makes sense given what exists. Many of these were built in different sessions with different framings; they may not all align with each other or with the current spec, and reconciling them is a product decision (see Open Path Question below) — not a technical refactor decision.
+
+**Database (Supabase, `public` schema):**
+- `survey_sections`, `survey_questions`, `survey_options` — populated with the locked v1 spec (7 sections, 48 questions + grouped sub-questions, 247 options)
+- `survey_responses` — empty; designed for JSONB blob storage (Decision 003)
+- `profiles`, `profile_details` — empty; schema unknown without inspection. Matching engine reads from these (see lib/matching.ts)
+- `matches` — empty; populated by `app/api/matches/generate`
+- `date_suggestions` — empty; populated by the same matching endpoint
+- `reflections` — empty; intended to feed post-date AI coaching loop
+- `match_responses`, `messages`, `email_series` — empty; purpose to be confirmed
+- `waitlist` — 21 real signups from matchmor.com
+
+**Application code (Next.js):**
+- `lib/matching.ts` — the AI matching engine. Calls Anthropic API (Claude). Generates 8-dimension compatibility scores, full markdown brief, friction note, conversation starters, date ideas. Also has a `generateCoachingNote()` function for post-date coaching.
+- `lib/supabase.ts` — Supabase client setup
+- `lib/stripe.ts` — Stripe integration (payments). Purpose: founding members get 6 months free, then $18.30/month.
+- `app/api/matches/generate` — POST endpoint that runs matching for a pair of members and emails both via Resend
+- `app/api/contact`, `app/api/contact-form` — contact-us endpoints
+- `app/api/home` — homepage data endpoint (purpose tbd)
+- `app/api/waitlist` — receives waitlist signups
+- `app/api/webhooks` — handles incoming events (likely Stripe and/or Supabase)
+- `app/api/reflections` — endpoint for post-date reflections
+- `app/page.tsx` — currently `return null` (the live homepage rendering must come from somewhere else; likely middleware or a different routing path; not yet investigated)
+
+**Concepts in the matching engine that are NOT in the locked v1 spec:**
+- **Faith tracks** (t1 = Orthodox, t2 = Aspirational, t3 = Open). Stored on `profiles.faith_track`. Used to adapt brief tone and coaching language.
+- **`profile_details` schema** with rich open-text fields: `faith_description`, `family_culture`, `recharge_style`, `love_language`, `sunday_afternoon`, `looking_for`, `interests` (array), plus structured fields like `temple_endowed`, `temple_recommend`, `sealing_importance`, `mission_served`, `church_activity`, `children_desired`. **These are interview-style narrative inputs, fundamentally different in shape from the 48-question structured survey.**
+- **Post-date reflection + AI coaching loop.** Members fill a reflection after each date; an AI coaching note is generated using the reflection + the original brief's friction note.
+
+**External services wired in:**
+- Anthropic (Claude API) — for generating briefs and coaching
+- Resend — for transactional emails
+- Stripe — for subscription payments
+
+**The product vision (from matchmor.com landing page):**
+matchMor is a guided AI-powered journey for LDS singles, framed as an alternative to swipe-based dating apps and to expensive human matchmaking services. Five-step journey per introduction: Brief → Conversation → Date → Reflection → Coaching. One curated introduction per week. Founding members (first 200) get 6 months free, then $18.30/month locked permanently.
 ---
 
 ## Decision 001 — Tech stack and hosting
@@ -42,7 +81,7 @@
 - pr4 privacy is enforced by the `is_private` flag on `survey_questions`, not by separate table isolation. Whatever code reads `survey_responses` must filter out questions where `is_private = true` before returning data to authenticated clients.
 - Adding new questions in v1.x is a content-only change (rows in `survey_questions` and `survey_options`), no schema migration required.  
 **Trigger to revisit:** If the owner ever wants to do hands-on matching-result debugging, OR if matchMor scales past ~10k active matched members and matching becomes slow, OR if a developer joins who would benefit from SQL-native query patterns.
-
+**Note added 2026-05-01:** The narrower JSONB-vs-normalized question is settled, but the broader question of *whether `survey_responses` is even the right input for the matching engine* is now open. The matching engine reads `profile_details` (interview-style narrative fields), not `survey_responses` (structured survey answers). See "Open Path Question" below.
 ---
 
 ## Decision 004 — pr4 self-rating privacy enforcement
@@ -82,3 +121,29 @@ This section tracks open architectural questions that are being deferred. When o
 - **LLM analysis output storage.** Stage-3 essay analysis output needs to live somewhere queryable. Not yet designed.
 - **Survey progress tracking.** How is "this member has finished the survey and is ready to be matched" represented? Open — currently no `survey_progress` or completion state exists.
 - **Versioning of the survey.** When v1.1 of the spec lands, how do we handle members who answered v1.0? Open.
+---
+
+## OPEN PATH QUESTION (added 2026-05-01)
+
+> **This is the most important unresolved question in the codebase right now. Future Claude must not recommend building UI, migrations, or matching changes until this is answered.**
+
+Two parallel mental models of matchMor exist in the codebase:
+
+- **Vision A — the locked v1 spec.** A 48-question structured survey (`survey_questions`, `survey_options`) with radios, sliders, tags, essays. Designed in a 2026-04-30 session.
+- **Vision B — the matching engine's mental model.** Interview-style narrative inputs in `profile_details` (faith_description, family_culture, sunday_afternoon, looking_for, etc.) plus faith tracks (t1/t2/t3) on `profiles`. Designed earlier (the matching engine was written 2026-03-04).
+
+These two visions are pointed at related but different products. The matching engine was built to read narrative texture. The 48-question survey collects structured data points. Neither is wrong, but they don't currently work together, and the next layer of UI work (onboarding, survey rendering, profile pages) needs to feed the matching engine — which means we have to pick one of:
+
+- **Path 1 — Vision B is right.** The matching engine's `profile_details` interview is what onboarding should be. The 48-question survey is deprecated work; we don't build UI for it. Cheapest, fastest. Means accepting that significant 2026-04-30 design work is sunk.
+- **Path 2 — Vision A is right.** The 48-question survey is what onboarding should be. The matching engine is rewritten to read structured survey responses. Means rewriting `lib/matching.ts` to take a different prompt with structured inputs. Means deprecating `profile_details`.
+- **Path 3 — Both, integrated.** The 48-question survey is intake (the structured part). The six essay questions in the survey (f8 testimony, fm6 family vision, p6 character, l7 passion, r7 relationship, pr6 bio) populate `profile_details` narrative fields. The matching engine continues reading `profile_details`. Some additional onboarding fields (faith_description, recharge_style, etc.) may need to be added to the survey or collected separately. More work but uses both halves of existing investment.
+
+**Status:** Open. To be resolved by owner (Peter).
+
+**What changes once this is decided:**
+- Whether the next build task is "render the 48-question survey UI" (Paths 2/3) or "render the profile_details interview UI" (Path 1)
+- Whether the matching engine needs rewriting (Path 2)
+- Whether additional questions need to be added to bridge what the engine wants vs. what the survey collects (Path 3)
+- What the demographics table (Decision 005) needs to look like, since it overlaps with `profile_details` fields
+
+**Decision is not urgent in the sense that nothing is breaking — but it IS blocking, in the sense that almost no further build work makes sense without it.**
