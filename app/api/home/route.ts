@@ -740,7 +740,7 @@ footer {
   <!-- Temple Star SVG -->
   <img src="/cupid-heart.png" class="hero-star" alt="" aria-hidden="true">
 
-  <div class="hero-eyebrow">Founding Member Invitation · Utah Valley · Spring 2026</div>
+  <div class="hero-eyebrow">Founding Member Invitation · Wasatch Front · 2026</div>
 
   <h1 class="hero-title">
     Be Among the<br>
@@ -754,7 +754,7 @@ footer {
 
   <div class="hero-badges">
     <div class="badge"><div class="badge-dot"></div> 6 Months Free for Founding Members</div>
-    <div class="badge"><div class="badge-dot"></div> Utah Valley Launch · Spring 2026</div>
+    <div class="badge"><div class="badge-dot"></div> Wasatch Front · Launching with the Founding 200</div>
     <div class="badge"><div class="badge-dot"></div> Curated · Not Swiped</div>
   </div>
 
@@ -977,7 +977,7 @@ footer {
         <div class="promise-check">✓</div>
         <div>
           <div class="promise-title">We will be honest about our stage</div>
-          <div class="promise-body">matchMor is launching now in Utah Valley. The pool is small and intentional. That is a feature — not a bug. Every founding member receives more personal attention than any app can offer at scale.</div>
+          <div class="promise-body">matchMor launches when the founding cohort is complete — 200 Latter-day Saints across the Wasatch Front, hand-reviewed and ready to be introduced. The pool is small and intentional. That is a feature — not a bug. Every founding member receives more personal attention than any app can offer at scale.</div>
         </div>
       </div>
     </div>
@@ -987,44 +987,9 @@ footer {
 <!-- TESTIMONIALS -->
 <div class="testimonials-section">
   <div class="testimonials-inner">
-    <div class="section-eyebrow reveal">Early Feedback</div>
-    <h2 class="section-heading reveal reveal-delay-1" style="color:var(--brown2)">What <em>founding members</em> are saying.</h2>
-
-    <div class="testimonials-grid">
-      <div class="testimonial reveal reveal-delay-1">
-        <div class="testimonial-stars">★★★★★</div>
-        <div class="testimonial-quote">I've been on every LDS dating app. This is the first one that actually felt like someone was paying attention to who I am — not just what I look like.</div>
-        <div class="testimonial-person">
-          <div class="testimonial-avatar" style="background:#7A8C6E">R</div>
-          <div>
-            <div class="testimonial-name">Rachel H.</div>
-            <div class="testimonial-detail">Founding Member · Provo, UT</div>
-          </div>
-        </div>
-      </div>
-      <div class="testimonial reveal reveal-delay-2">
-        <div class="testimonial-stars">★★★★★</div>
-        <div class="testimonial-quote">The compatibility brief before our first conversation was remarkable. We knew we had real things in common before we said hello. It changed the whole dynamic.</div>
-        <div class="testimonial-person">
-          <div class="testimonial-avatar" style="background:#B8923A">C</div>
-          <div>
-            <div class="testimonial-name">Caleb S.</div>
-            <div class="testimonial-detail">Founding Member · Salt Lake City, UT</div>
-          </div>
-        </div>
-      </div>
-      <div class="testimonial reveal reveal-delay-3">
-        <div class="testimonial-stars">★★★★★</div>
-        <div class="testimonial-quote">The post-date reflection questions were things I'd never thought to ask myself. They helped me understand what I actually felt — not just what I thought I should feel.</div>
-        <div class="testimonial-person">
-          <div class="testimonial-avatar" style="background:#C4714A">H</div>
-          <div>
-            <div class="testimonial-name">Hannah W.</div>
-            <div class="testimonial-detail">Founding Member · Provo, UT</div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <div class="section-eyebrow reveal">Coming Soon</div>
+    <h2 class="section-heading reveal reveal-delay-1" style="color:var(--brown2)"><em>Stories from</em> our founding cohort.</h2>
+    <p class="section-body reveal reveal-delay-2">matchMor launches when our founding 200 is complete. The first reflections from real founding members will live here — unedited, attributed, and shared with their permission. Until then, this space stays empty on purpose.</p>
   </div>
 </div>
 
@@ -1054,15 +1019,13 @@ footer {
           <input class="cta-input" type="text" placeholder="Last name" required id="ctaLast">
         </div>
         <input class="cta-input" type="email" placeholder="Email address" required id="ctaEmail">
-        <select class="cta-select" id="ctaLocation" required>
+       <select class="cta-select" id="ctaLocation" required>
           <option value="" disabled selected>Where are you located?</option>
-          <option>Provo / Orem, UT</option>
-          <option>Salt Lake City, UT</option>
-          <option>Logan / Cache Valley, UT</option>
-          <option>St. George, UT</option>
+          <option>Wasatch Front, UT</option>
+          <option>St. George / Cedar City, UT</option>
+          <option>Rexburg / Idaho Falls, ID</option>
           <option>Boise / Meridian, ID</option>
           <option>Mesa / Phoenix, AZ</option>
-          <option>Other Utah County</option>
           <option>Other — Notify me when my area launches</option>
         </select>
         <select class="cta-select" id="ctaGender" required>
@@ -1071,14 +1034,14 @@ footer {
           <option>Latter-day Saint man seeking a woman</option>
         </select>
         <button type="submit" class="cta-btn">Claim My Founding Spot — It's Free →</button>
-        <div class="cta-privacy">No credit card required. No spam. We will contact you when matchMor launches in your area. Your information is never sold or shared. <a href="/api/privacy" style="color:var(--gold);text-decoration:none">Privacy Policy</a></div>
+        <div class="cta-privacy">No credit card required. No spam. We will contact you when matchMor launches. Your information is never sold or shared. <a href="/api/privacy" style="color:var(--gold);text-decoration:none">Privacy Policy</a></div>
       </form>
     </div>
 
     <div class="success-state" id="successState">
       <div class="success-icon">✦</div>
       <div class="success-heading">You're on the list.</div>
-      <div class="success-body">Welcome to the matchMor founding cohort. We'll be in touch soon with next steps — and your first introduction when we launch in your area this spring.</div>
+      <div class="success-body">Welcome to the matchMor founding cohort. We'll be in touch soon with next steps — and your first introduction when our founding 200 is complete and matchMor launches.</div>
       <div class="success-ref" id="successRef"></div>
     </div>
 
