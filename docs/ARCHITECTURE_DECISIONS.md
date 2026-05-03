@@ -190,3 +190,89 @@ These three questions should feel like the kind of things a thoughtful matchmake
 - Photos are pr1 in the survey but the storage bucket itself hasn't been verified to exist. Future open question.
 
 **Trigger to revisit:** If real members start completing the survey and the AI briefs feel thin (i.e., the matching engine isn't getting enough signal), we may need to add more bridging questions or revisit which survey fields populate `profile_details`. Test with the first 5-10 founding members and tune.
+
+---
+
+## Decision 008 — Launch is triggered by founding-cohort completion, not by a calendar date
+**Date:** 2026-05-02  
+**Status:** ✅ Decided
+
+**Decision:** matchMor will launch when the founding cohort of 200 Latter-day Saints across the Wasatch Front is complete and hand-reviewed — not on a fixed calendar date. Public-facing copy frames the launch trigger as the cohort completion itself, never as a season or month.
+
+**Rationale:**
+- A calendar date the product cannot credibly hit becomes a credibility risk that compounds with every signup. Prior copy referenced "Spring 2026"; at observed signup velocity (~10 real signups in the first month), hitting 200 by end of spring is not realistic.
+- A cohort-completion trigger is honest in a way a date is not: matchMor genuinely will not launch until the community exists to introduce people to. The pacing is real, not promotional.
+- Cohort-completion framing is also stronger marketing. Instead of urgency-by-deadline (which the product cannot enforce), it is urgency-by-scarcity (which the 200-spot cap genuinely creates). It aligns with the white-glove, intentional, anti-swipe positioning the rest of the page is built on.
+
+**Implications:**
+- All landing page copy referencing "Spring 2026", "this spring", or "launching in your area [date]" was rewritten to reference cohort completion instead. See `app/api/home/route.ts` (the live homepage; see Decision 010).
+- Public copy may still reference "2026" loosely as a year context, but should never commit to a season or month.
+- Internally, "launch" is defined as the day the 200th founding member is admitted and hand-reviewed.
+- Marketing pacing, runway planning, and any external comms (e.g. press, partnerships) should be planned against the cohort signal, not a date.
+- If cohort growth requires expanding the geographic footprint or revisiting the 200 number, that's a Decision 008 amendment — don't silently change copy without updating this entry.
+
+**Trigger to revisit:** If the founding cohort takes long enough to fill that the absence of a launch date itself becomes a credibility issue, OR if product strategy decides to launch with fewer than 200 founding members for some specific reason (e.g. a smaller pilot cohort).
+
+---
+
+## Decision 009 — Launch market is the Wasatch Front, not Utah Valley
+**Date:** 2026-05-02  
+**Status:** ✅ Decided
+
+**Decision:** matchMor's launch market is the Wasatch Front — the corridor of Utah communities running roughly 1.5 hours north-to-south, encompassing Provo / Orem, Salt Lake City, Logan / Cache Valley, and adjacent Utah counties. This replaces the prior framing of "Utah Valley" as the launch market.
+
+**Rationale:**
+- Wasatch Front captures a meaningfully larger pool of LDS singles, which shortens the path to a complete founding cohort (see Decision 008).
+- The 1.5-hour drivability of the corridor means members across the Wasatch Front can realistically be set up on dates with each other; geographic compatibility doesn't suffer from the wider radius.
+- "Utah Valley" understated the actual addressable market; "Wasatch Front" is more accurate to the population matchMor is going for.
+
+**Implications:**
+- Landing page copy refers to the launch market as "Wasatch Front" everywhere it appeared as "Utah Valley" or "Provo" or "Salt Lake."
+- The waitlist signup form's location dropdown was consolidated: Provo / Orem, Salt Lake City, Logan / Cache Valley, and "Other Utah County" all collapse into a single "Wasatch Front, UT" option. "St. George, UT" expanded to "St. George / Cedar City, UT". "Rexburg / Idaho Falls, ID" was added as a new option.
+- Existing waitlist rows that recorded location as "Provo / Orem, UT" or "Salt Lake City, UT" still exist with those values; they have not been retroactively re-mapped. If consolidation is ever needed, a small one-time SQL update can collapse them into "Wasatch Front, UT".
+- Future markets beyond the Wasatch Front are routed through the form's "Other — Notify me when my area launches" option, same as before.
+
+**Trigger to revisit:** If founding-cohort growth from the Wasatch Front stalls before reaching 200, OR if a different geographic concentration of LDS singles becomes a more strategic launch market.
+
+---
+
+## Decision 010 — Landing page is rendered by `app/api/home/route.ts` via `next.config.ts` rewrite
+**Date:** 2026-05-02  
+**Status:** 📝 Provisional (until the stale duplicate at `public/matchmor-founding.html` is removed)
+
+**Decision:** The live homepage at matchmor.com is rendered by `app/api/home/route.ts` — a Next.js API route that returns a complete HTML document via `NextResponse`. The Next.js page at `app/page.tsx` is intentionally `return null`. The connection between the root URL and the API route is made by a rewrite in `next.config.ts`:
+
+```ts
+async rewrites() {
+  return {
+    beforeFiles: [
+      { source: '/', destination: '/api/home' },
+      { source: '/privacy', destination: '/api/privacy' },
+      { source: '/contact', destination: '/api/contact' },
+      { source: '/terms', destination: '/api/terms' },
+    ],
+  }
+}
+```
+
+Visiting `matchmor.com/` is silently rewritten server-side to `/api/home`, which returns the HTML. The same pattern applies to `/privacy`, `/contact`, and `/terms`.
+
+**Rationale:** The pattern was inherited from prior sessions — a static HTML landing page was migrated into an API route, likely to enable server-side dynamic content (the live waitlist counter at `/api/waitlist/count`, populating spot counts at render time). The architectural choice is reasonable. The problem was that it was undocumented, so a session looking to edit "the landing page" couldn't find it.
+
+**Known stale duplicate (this is the landmine):** A near-copy of the same landing page also exists at `public/matchmor-founding.html`. It is **NOT** served by anything. It looks like the homepage. It is not. Editing it has no effect on the live site. This file should be deleted in a cleanup commit; until then, it is documented here so future sessions don't fall into the same trap this session did. Specifically, the 2026-05-02 session burned ~30 minutes editing `public/matchmor-founding.html` before discovering it wasn't the live homepage — exactly the kind of friction this log is supposed to prevent.
+
+**Implications future-Claude must respect:**
+- To edit landing page copy, edit `app/api/home/route.ts`, not `public/matchmor-founding.html` and not `app/page.tsx`.
+- The HTML in `route.ts` is wrapped in a JavaScript template literal (backticks). Edits must not introduce stray backticks or `${...}` sequences inside the HTML, as those are interpreted by the template literal.
+- The `/privacy`, `/contact`, and `/terms` routes are served by sibling API routes (`app/api/privacy`, `app/api/contact`, `app/api/terms`). The same caveats apply.
+- If a future change moves the landing page to a more conventional Next.js component (e.g. populating `app/page.tsx` properly), the `next.config.ts` rewrite for `/` should be removed in the same commit. Half-migrations create exactly this kind of confusion.
+
+**Cleanup tasks pending:**
+- Delete `public/matchmor-founding.html` (and consider whether `privacy.html`, `terms.html` in `public/` are also stale duplicates of the API-route versions; they likely are).
+- After cleanup, this entry's status moves from 📝 Provisional to ✅ Decided.
+
+**Known content issues on the live landing page (not strictly architectural, but parked here for visibility):**
+- The live waitlist counter has a hardcoded fallback of `71.5%` (line ~`document.getElementById('counterFill').style.width = '71.5%';` in the catch block of `loadWaitlistCount()`). When the `/api/waitlist/count` call fails, the counter renders inflated. Should be lowered to match real signup count.
+- The `waitlist` table contains ~10 test rows from owner-driven testing, mixed in with ~11 real signups. The `/api/waitlist/count` response includes both. Either the test rows should be cleaned out, or the count endpoint should filter them. Either way, the live counter currently overstates real cohort progress.
+
+**Trigger to revisit:** When `public/matchmor-founding.html` is deleted (status flips to ✅), OR if the routing pattern itself is changed (e.g. migrating to `app/page.tsx` proper).
